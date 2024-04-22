@@ -1,0 +1,145 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Rol {
+  id           Int            @id
+  nombre       String         @db.VarChar(50)
+  Persona_role Persona_role[]
+}
+
+model Persona {
+  id                  Int             @id
+  nombre              String          @db.VarChar(50)
+  apellido            String          @db.VarChar(50)
+  documento_identidad String          @db.VarChar(50)
+  fecha_nacimiento    DateTime
+  direccion           String          @db.VarChar(100)
+  correo_electronico  String          @db.VarChar(50)
+  telefono            String          @db.VarChar(20)
+  Persona_role        Persona_role[]
+  Transacciones       Transacciones[]
+  Creditos            Creditos[]
+  Cuentas             Cuentas[]
+  Tarjetas            Tarjetas[]
+}
+
+model Persona_role {
+  id                         Int                          @id
+  id_persona                 Int
+  id_rol                     Int
+  Persona                    Persona                      @relation(fields: [id_persona], references: [id])
+  Rol                        Rol                          @relation(fields: [id_rol], references: [id])
+  Historial_Atencion_Cliente Historial_Atencion_Cliente[]
+}
+
+model Historial_Atencion_Cliente {
+  id_atencion    Int          @id
+  id_cliente     Int
+  id_empleado    Int
+  fecha_atencion DateTime
+  tipo_atencion  String       @db.VarChar(50)
+  descripcion    String       @db.Text
+  Persona_role   Persona_role @relation(fields: [id_empleado], references: [id])
+}
+
+model Tipo_transaccion {
+  id            Int             @id
+  name          String          @db.VarChar(20)
+  Transacciones Transacciones[]
+}
+
+model Transacciones {
+  id_transaccion      Int              @id
+  id_persona          Int
+  id_tipo_transaccion Int
+  monto               Decimal          @db.Decimal(10, 2)
+  fecha_transaccion   DateTime
+  descripcion         String           @db.Text
+  Tipo_transaccion    Tipo_transaccion @relation(fields: [id_tipo_transaccion], references: [id])
+  Persona             Persona          @relation(fields: [id_persona], references: [id])
+}
+
+model Sucursales {
+  id_sucursal     Int    @id
+  nombre_sucursal String @db.VarChar(50)
+  ciudad          String @db.VarChar(20)
+  departamento    String @db.VarChar(30)
+  pais            String @db.VarChar(30)
+  direccion       String @db.VarChar(100)
+  telefono        String @db.VarChar(20)
+}
+
+model Creditos {
+  id_credito         Int      @id
+  id_persona         Int
+  monto_original     Decimal  @db.Decimal(10, 2)
+  saldo_pendiente    Decimal  @db.Decimal(10, 2)
+  tasa_interes       Decimal  @db.Decimal(5, 2)
+  fecha_inicio       DateTime
+  fecha_finalizacion DateTime
+  tipo_credito       String   @db.VarChar(50)
+  estado_credito     String   @db.VarChar(50)
+  Persona            Persona  @relation(fields: [id_persona], references: [id])
+}
+
+model Tipo_cuenta {
+  id      Int       @id
+  name    String    @db.VarChar(20)
+  Cuentas Cuentas[]
+}
+
+model Cuentas {
+  id_cuenta      Int         @id
+  id_persona     Int
+  id_tipo_cuenta Int
+  saldo_actual   Decimal     @db.Decimal(10, 2)
+  moneda         String      @db.VarChar(10)
+  fecha_apertura DateTime
+  fecha_cierre   DateTime?
+  estado_cuenta  String      @db.VarChar(50)
+  beneficios     String      @db.VarChar(200)
+  Persona        Persona     @relation(fields: [id_persona], references: [id])
+  Tipo_cuenta    Tipo_cuenta @relation(fields: [id_tipo_cuenta], references: [id])
+}
+
+model Tipo_tarjeta {
+  id       Int        @id
+  name     String     @db.VarChar(20)
+  Tarjetas Tarjetas[]
+}
+
+model Tarjetas {
+  id_tarjeta        Int          @id
+  id_persona        Int
+  id_tipo_tarjeta   Int
+  numero_tarjeta    String       @db.VarChar(16)
+  ultimos_digitos   String       @db.VarChar(4)
+  nombre_titular    String       @db.VarChar(50)
+  fecha_emision     DateTime
+  fecha_vencimiento DateTime
+  fecha_corte       DateTime
+  cupo_total        Decimal      @db.Decimal(10, 2)
+  cupo_disponible   Decimal      @db.Decimal(10, 2)
+  saldo_actual      Decimal      @db.Decimal(10, 2)
+  tasa_interes      Decimal      @db.Decimal(5, 2)
+  estado_tarjeta    String       @db.VarChar(50)
+  cvv               String       @db.VarChar(3)
+  pago_minimo       Decimal      @db.Decimal(10, 2)
+  pago_total        Decimal      @db.Decimal(10, 2)
+  pago_anticipado   Decimal      @db.Decimal(10, 2)
+  programa_puntos   String?       @db.VarChar(200)
+  Persona           Persona      @relation(fields: [id_persona], references: [id])
+  Tipo_tarjeta      Tipo_tarjeta @relation(fields: [id_tipo_tarjeta], references: [id])
+}
