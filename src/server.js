@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 
 export class Server {
   app = express();
@@ -18,6 +19,9 @@ export class Server {
     // middlewares
     this.app.use(express.json());
     this.app.use(express.urlencoded({extended: true}));
+
+    // Configurar CORS
+    this.app.use(cors()); // Esto permitirá cualquier origen, también puedes personalizarlo si es necesario
 
     // load routes
     this.app.use(this.routes);
