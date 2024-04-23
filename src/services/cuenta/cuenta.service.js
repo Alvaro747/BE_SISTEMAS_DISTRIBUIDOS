@@ -58,7 +58,7 @@ export class CuentaService {
       query.select = {...query.select, beneficios: true};
     }
     if (estado) {
-      query.select = {...query.select, estado: true};
+      query.select = {...query.select, estado_cuenta: true};
     }
 
     return query;
