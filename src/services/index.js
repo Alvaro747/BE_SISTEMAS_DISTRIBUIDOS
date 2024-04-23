@@ -4,6 +4,7 @@ import {SucursalesService} from "./sucursales/sucursales.service.js";
 import {TarjetaService} from "./tarjeta/tarjeta.service.js";
 import {CuentaService} from "./cuenta/cuenta.service.js";
 import {TransaccionService} from "./transaccion/transaccion.service.js";
+import {CreditoService} from "./credito/credito.service.js";
 
 export {
   PrismaService,
@@ -11,5 +12,6 @@ export {
   SucursalesService,
   TarjetaService,
   CuentaService,
-  TransaccionService
+  TransaccionService,
+  CreditoService
 };
