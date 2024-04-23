@@ -1,5 +1,5 @@
 import {TarjetaService} from "../../services/index.js";
-import { Responses } from "../../utils/responses.js";
+import {Responses} from "../../utils/responses.js";
 
 export class TarjetaController {
   static async getTarjeta(req, res) {
@@ -13,5 +13,15 @@ export class TarjetaController {
         console.error(error);
         return Responses.error(res, 500, "Ocurrio un error con el servidor");
       });
+  }
+
+  static async getQuestions(req, res) {
+    const response = TarjetaService.getQuestions();
+
+    if (!response) {
+      return Responses.error(res, 404, "No se encontraron preguntas");
+    }
+
+    return Responses.success(res, response, 200, "Preguntas encontradas");
   }
 }

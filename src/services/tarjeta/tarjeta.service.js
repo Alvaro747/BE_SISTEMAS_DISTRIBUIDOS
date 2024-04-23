@@ -86,4 +86,45 @@ export class TarjetaService {
 
     return query;
   }
+
+  static getQuestions() {
+    return [
+      {
+        label: "Fecha de emision",
+        name: "fechaEmision",
+      },
+      {
+        label: "Fecha de vencimiento",
+        name: "fechaVencimiento",
+      },
+      {
+        label: "Fecha de corte",
+        name: "fechaCorte",
+      },
+      {
+        label: "Cupo total",
+        name: "cupoTotal",
+      },
+      {
+        label: "Tasa de interes",
+        name: "tasaInteres",
+      },
+      {
+        label: "Estado",
+        name: "estado",
+      },
+      {
+        label: "Pago minimo",
+        name: "pagoMinimo",
+      },
+      {
+        label: "Pago total",
+        name: "pagoTotal",
+      },
+      {
+        label: "Programa de puntos",
+        name: "programaPuntos",
+      },
+    ];
+  }
 }
