@@ -9,7 +9,7 @@ export class AuthClientController {
       .then((user) => Responses.success(res, user, 200, "Cliente encontrado"))
       .catch((error) => {
         console.error(error);
-        return Responses.error(res, 500, "Ocurrio un error con el servidor");
+        return Responses.error(res, 500, error.message);
       });
   }
 }

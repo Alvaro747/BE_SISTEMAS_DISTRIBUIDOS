@@ -11,7 +11,7 @@ export class TarjetaController {
       )
       .catch((error) => {
         console.error(error);
-        return Responses.error(res, 500, "Ocurrio un error con el servidor");
+        return Responses.error(res, 500, error.message);
       });
   }
 

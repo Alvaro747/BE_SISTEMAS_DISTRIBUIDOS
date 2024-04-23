@@ -7,20 +7,25 @@ export class AuthClientService {
     }
     const repository = PrismaService.getInstance();
 
+    const ROLE_CLIENTE = 1;
+
     const response = await repository.persona.findFirst({
       where: {
-        documento_identidad: idClient,
+        AND: [
+          {documento_identidad: idClient},
+          {Persona_role: {some: {id_rol: ROLE_CLIENTE}}},
+        ],
       },
-      select:{
+      select: {
         id: true,
         nombre: true,
         apellido: true,
         documento_identidad: true,
-      }
+      },
     });
 
     if (!response) {
-      throw new Error("El cliente no esta el la base de datos");
+      throw new Error("El cliente no esta el la base de datos o no es un cliente");
     }
 
     return response;

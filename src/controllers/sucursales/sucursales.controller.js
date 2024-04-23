@@ -1,5 +1,5 @@
 import {SucursalesService} from "../../services/index.js";
-import { Responses } from "../../utils/responses.js";
+import {Responses} from "../../utils/responses.js";
 
 export class SucursalesController {
   static async getSucursales(req, res) {
@@ -9,7 +9,7 @@ export class SucursalesController {
       )
       .catch((error) => {
         console.error(error);
-        return Responses.error(res, 500, "Ocurrio un error con el servidor");
+        return Responses.error(res, 500, error.message);
       });
   }
 
@@ -23,7 +23,7 @@ export class SucursalesController {
       )
       .catch((error) => {
         console.error(error);
-        return Responses.error(res, 500, "Ocurrio un error con el servidor");
+        return Responses.error(res, 500, error.message);
       });
   }
 }
