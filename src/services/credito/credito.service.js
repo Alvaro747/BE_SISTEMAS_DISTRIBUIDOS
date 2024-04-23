@@ -66,7 +66,7 @@ export class CreditoService {
     }
 
     if (estado) {
-      query.select = {...query.select, estado: true};
+      query.select = {...query.select, estado_credito: true};
     }
 
     return query;
