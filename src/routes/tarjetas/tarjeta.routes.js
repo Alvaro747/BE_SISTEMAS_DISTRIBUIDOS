@@ -20,10 +20,6 @@ export class TarjetaRoutes {
      *               idCliente:
      *                 type: string
      *                 description: The ID of the cliente
-     *               ultimosDigitos:
-     *                 type: string
-     *                 description: The last digits of the tarjeta
-     *                 example: "1234"
      *               fechaEmision:
      *                 type: boolean
      *                 description: The emission date of the tarjeta
