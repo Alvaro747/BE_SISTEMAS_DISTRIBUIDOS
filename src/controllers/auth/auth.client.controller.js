@@ -1,11 +1,15 @@
 import {AuthClientService} from "../../services/index.js";
+import {Responses} from "../../utils/responses.js";
 
 export class AuthClientController {
   static async getClient(req, res) {
     const idCliente = req.params.id;
 
     AuthClientService.getClient(idCliente)
-      .then((user) => res.status(201).json(user))
-      .catch((error) => res.status(500).json({error: error.message}));
+      .then((user) => Responses.success(res, user, 200, "Cliente encontrado"))
+      .catch((error) => {
+        console.error(error);
+        return Responses.error(res, 500, "Ocurrio un error con el servidor");
+      });
   }
 }

@@ -1,7 +1,11 @@
 import {Router} from "express";
 import {SucursalesController} from "../../controllers/index.js";
 
-/**
+
+export class SucursalesRoutes {
+  static get routes() {
+    const router = Router();
+    /**
  * @swagger
  * /api/sucursales:
  *   get:
@@ -14,13 +18,33 @@ import {SucursalesController} from "../../controllers/index.js";
  *           application/json:
  *             schema:
  *               type: array
- *               
- *        
+ *
+ *
  */
-export class SucursalesRoutes {
-  static get routes() {
-    const router = Router();
     router.get("/sucursales", SucursalesController.getSucursales);
+
+/**
+ * @swagger
+ * /api/sucursal/{id}:
+ *   get:
+ *     summary: Get a sucursal by ID
+ *     tags: [Sucursales]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the sucursal to return
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Sucursal by ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *          
+ */
+    router.get("/sucursal/:id", SucursalesController.getSucursalById);
     return router;
   }
 }
